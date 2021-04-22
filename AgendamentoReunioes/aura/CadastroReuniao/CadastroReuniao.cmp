@@ -1,0 +1,44 @@
+<aura:component implements="flexipage:availableForRecordHome,force:appHostable"  >
+    <aura:registerEvent name="finish" type="c:ReuniaoAcaoConcluida" />
+    
+    
+    <aura:attribute name="selecionarOrganizador" type="Boolean" default="true"/>
+    <aura:attribute name="organizadorSelecionado" type="Id" />
+    <aura:attribute name="continuarCadastro" type="Boolean" default="false"/>
+ 
+    <lightning:card title="Cadastrar Reuniao">
+        <div class="slds-p-horizontal--small">
+            <lightning:recordEditForm aura:id="recordEditForm" objectApiName="Reuniao__c" onsuccess="{!c.saveReuniao}" >
+                <lightning:messages />
+                <aura:if isTrue="{!v.selecionarOrganizador}">
+                    <label style="color:blue">Somente o Organizador pode criar uma Reunião</label><br/>
+                    <label style="color:blue">Abaixo selecione o Organizador no Campo Usuário</label>
+                    <lightning:inputField value="{!v.organizadorSelecionado}" fieldName="User__c" />
+                    <aura:if isTrue="{!v.organizadorSelecionado}">
+                        <label>O organizador será:</label>
+                        <lightning:recordViewForm recordId="{!v.organizadorSelecionado}" objectApiName="User__r">
+                            <lightning:outputField  fieldName="Name" />
+                            <lightning:outputField  fieldName="RG__c" />
+                        </lightning:recordViewForm>
+                         
+                        <lightning:button onclick="{!c.continuarCadastro}" variant="brand" label=">>>"></lightning:button>
+                    </aura:if>
+                </aura:if>
+				
+                <aura:if isTrue="{!v.continuarCadastro}">
+                    <lightning:inputField fieldName="Titulo__c" />
+                    <lightning:inputField fieldName="Descricao__c" />
+                    <lightning:inputField fieldName="Modalidade__c" />    
+                    <lightning:inputField fieldName="Endereco__c" /> 
+                    <lightning:inputField fieldName="DataHora__c" />
+                   
+                    <lightning:inputField fieldName="StatusReuniao__c" />
+                    <lightning:inputField fieldName="Equipamentos__c" />
+                    <lightning:button class="slds-m-top_small" type="submit" label="Criar nova Reunião" />
+                </aura:if>
+            </lightning:recordEditForm>
+        </div>
+    </lightning:card>
+
+  
+</aura:component>

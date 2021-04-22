@@ -1,0 +1,30 @@
+<template>
+  <lightning-card>
+    <h1>Reunião</h1>
+      
+    
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+        <thead>
+          <tr class="slds-line-height_reset">
+            <th scope="col">
+              <div class="slds-truncate" title="Nome Participante">Título</div>
+            </th>
+          </tr>
+        </thead>
+        
+        
+        <tbody>
+          <tr class="slds-hint-parent">
+            <td data-label="Reuniões">
+              <template for:each={reunioes} for:item="reuniao">
+                <p class="slds-truncate" key={reuniao.Id}>{reuniao.Reuniao__r.Titulo__c}</p>
+              </template>
+            </td>
+          </tr>
+        </tbody>
+         
+      </table>
+      
+    
+  </lightning-card>
+</template>

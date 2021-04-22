@@ -1,0 +1,13 @@
+<aura:component controller="GerenciadorReuniaoController" implements="force:AppHostable">
+    
+    
+    <lightning:card > 
+        <p style="font-size: 20px">ficou faltando fazer um calendário com todos os registros de reunião de acordo de acordo com a data de cada reunião
+            e também listando cada  usuário que participa da reunião.
+            sorry!  🤧</p> <br/>
+            <p style="font-size: 15px">Att, estagiários gp 1. 🤪 </p>
+
+        
+        <!-- <c:calendar/> -->
+    </lightning:card>
+</aura:component>

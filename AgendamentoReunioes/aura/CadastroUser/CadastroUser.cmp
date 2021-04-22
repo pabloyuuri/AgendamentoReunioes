@@ -1,0 +1,29 @@
+<aura:component implements="force:appHostable" >
+    <aura:registerEvent name="finish" type="c:ReuniaoAcaoConcluida" />
+    
+    <lightning:card title="Cadastrar Usuário">
+        <div class="slds-p-horizontal--small">
+            <lightning:recordEditForm aura:id="recordEditForm" objectApiName="User" onsuccess="{!c.saveUser}" >
+                <lightning:messages />
+                <lightning:inputField fieldName="ProfileId" />
+               	<lightning:inputField fieldName="Username" />
+                <lightning:inputField fieldName="FirstName" />
+                <lightning:inputField fieldName="LastName" />
+                <lightning:inputField fieldName="Alias" />
+                <lightning:inputField fieldName="RG__c" /> 
+                <lightning:inputField fieldName="Email" /> 
+                <lightning:inputField fieldName="CommunityNickname" />
+                <lightning:inputField fieldName="role" />
+                <lightning:inputField fieldName="userlicenseid" />
+                <lightning:inputField fieldName="Profile" />
+                <lightning:inputField fieldName="EmailEncodingKey" />
+                <lightning:inputField fieldName="TimeZoneSidKey" />
+                <lightning:inputField fieldName="LocaleSidKey" />
+                <lightning:inputField fieldName="LanguageLocaleKey" />
+                <lightning:inputField fieldName="receiveApprovalsEmails" />
+                <lightning:button class="slds-m-top_small" type="submit" label="Criar novo Usuário" />
+                
+            </lightning:recordEditForm>
+        </div>
+    </lightning:card>
+</aura:component>

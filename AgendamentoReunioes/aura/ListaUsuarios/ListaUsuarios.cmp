@@ -1,0 +1,112 @@
+<aura:component controller="UsuarioController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="finish" event="c:ReuniaoAcaoConcluida" action="{!c.handleModalTableEventCustom}" />
+    <aura:handler name="init" value="{!this}"  action="{!c.doInit}" />
+
+    <aura:attribute name="filtroNome" type="String" />
+    <aura:attribute name="filtroRG" type="String" />
+    
+    <aura:attribute name="usuarios" type="List" />
+    <aura:attribute name="columns" type="List" />
+    <aura:attribute name="errors" type="Object" default="[]"/>
+    <aura:attribute name="delIdUsuario" type="List" />
+    
+    
+    <aura:attribute name="modalCadastroUsuario" type="Boolean" default="false"/>
+    <aura:attribute name="modalCadastroReuniao" type="Boolean" default="false"/>
+    
+    <lightning:card>        
+        <aura:set attribute="title">
+            <h1 class="slds-text-heading_medium">Usuários</h1>
+        </aura:set>
+        
+        <div class="slds-clearfix">
+            <!-- Botão para adicionar nova usuário--> 
+            <div class="slds-float_left">
+                <lightning:buttonGroup>
+                    <lightning:button label="Novo Usuário" onclick="{!c.openCadastroUsuario}"></lightning:button>
+                </lightning:buttonGroup>
+            </div>
+            <div class="slds-float_left">
+                <lightning:buttonGroup>
+                    <lightning:button label="Nova Reunião" onclick="{!c.openCadastroReuniao}"></lightning:button>
+                </lightning:buttonGroup>
+            </div>
+            <div class="slds-float_right">
+                <lightning:buttonGroup>
+                    <lightning:button label="Deletar Usuário(s)" variant="destructive" onclick="{!c.deletarUsuario}"></lightning:button>
+                </lightning:buttonGroup>
+            </div>
+        </div>
+        <div>
+                <fieldset style="border: 1px solid #666;padding: 10px;margin-bottom: 10px;" class="slds-form-element slds-form-element_compound">
+                    <legend class="slds-text-heading_label">Filtros</legend>  
+                    <div class="slds-form-element__control">
+                        <div class="slds-form-element__row">
+                            <div class="slds-size_1-of-4">
+                                <div class="slds-form-element">
+                                    <lightning:input type="text" value="{!v.filtroNome}" label="Nome"/>
+                                </div>
+                            </div>
+                            <div class="slds-size_1-of-4">
+                                <div class="slds-form-element">
+                                    <lightning:input type="text" value="{!v.filtroRG}" label="RG"/>
+                                </div>
+                            </div>
+                            
+                            <div class="slds-size_1-of-4">
+                                <div class="slds-form-element" style="margin-top: 20px;">
+                                    <!-- VAI BUSCAR E SETAR NA VARIÁVEL ARRAY-LIST -->
+                                    <lightning:buttonIcon iconName="utility:search"  variant="border-filled" alternativeText="Buscar" title="Buscar" onclick="{!c.filtrar}"/>
+                                    <lightning:buttonIcon iconName="utility:clear"  variant="border-filled" alternativeText="Limpar" title="Limpar" onclick="{!c.limparFiltro}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+           
+        </div>
+    
+
+        <div style="height: 300px">
+            <lightning:datatable
+                                 aura:id="usuarioTable"
+                                 keyField="Id"
+                                 data="{!v.usuarios}"
+                                 columns="{!v.columns}"
+                                 onrowselection="{!c.handleRowAction}"
+                                 onsave="{!c.handleSaveEdition}"
+                                 />
+        </div>
+	</lightning:card>
+    
+    
+    <aura:if isTrue="{!v.modalCadastroUsuario}">
+        <section class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  iconName="utility:close" variant="bare" onclick="{! c.handleClickButtonUsuario }" alternativeText="FEchar" title="FEchar" />
+                    <h2 class="slds-modal__title slds-hyphenate">Cadastro de Reunião</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c:CadastroUser />
+                </div>	
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+
+    <aura:if isTrue="{!v.modalCadastroReuniao}">
+        <section class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"  iconName="utility:close" variant="bare" onclick="{! c.handleClickButtonReuniao }" alternativeText="FEchar" title="FEchar" />
+                    <h2 class="slds-modal__title slds-hyphenate">Cadastro de Reunião</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <c:CadastroReuniao />
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+</aura:component>
